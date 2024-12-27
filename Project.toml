@@ -1,0 +1,4 @@
+name = "SamplingBasedPlanningAlgorithms"
+uuid = "c165e167-a495-4ec6-a235-96eef0809332"
+authors = ["Jiří Pospíšil <jiri.pospisil262@gmail.com>"]
+version = "0.1.0"
