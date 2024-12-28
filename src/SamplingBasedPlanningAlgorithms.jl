@@ -1,7 +1,7 @@
 module SamplingBasedPlanningAlgorithms
 
 export Point
-export CircleObstacle, PolygonObstacle, RectangleObstacle, SquareObstacle
+export Obstacle, CircleObstacle, PolygonObstacle, RectangleObstacle, SquareObstacle, ObstacleType
 
 include("environment.jl")
 
