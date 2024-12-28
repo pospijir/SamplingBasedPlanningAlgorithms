@@ -1,5 +1,8 @@
 module SamplingBasedPlanningAlgorithms
 
-greet() = print("Hello World!")
+export Point
+export CircleObstacle, PolygonObstacle, RectangleObstacle, SquareObstacle
+
+include("environment.jl")
 
 end # module SamplingBasedPlanningAlgorithms

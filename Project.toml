@@ -2,3 +2,9 @@ name = "SamplingBasedPlanningAlgorithms"
 uuid = "c165e167-a495-4ec6-a235-96eef0809332"
 authors = ["Jiří Pospíšil <jiri.pospisil262@gmail.com>"]
 version = "0.1.0"
+
+[deps]
+ArgCheck = "dce04be8-c92d-5529-be00-80e4d2c0e197"
+
+[compat]
+ArgCheck = "2.4.0"
