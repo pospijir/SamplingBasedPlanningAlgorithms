@@ -66,7 +66,7 @@ function RectangleObstacle(id::Int, origin::Point, a::Real, b::Real, angle::Real
         Point(rotated_x, rotated_y)
     end, length(unrotated_vertices))
 
-    radius = max(half_a, half_b)
+    radius = sqrt(half_a ^ 2 + half_b ^ 2)
     
     return Obstacle{obstacle_type}(id, origin, radius, rotated_vertices)
 end
