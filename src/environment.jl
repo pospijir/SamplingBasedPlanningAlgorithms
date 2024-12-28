@@ -9,13 +9,13 @@ end
 
 ##########  Obstacles  #############################################################
 
-abstract type ObstacleTypes end
-abstract type CircleObstacle <: ObstacleTypes end
-abstract type PolygonObstacle <: ObstacleTypes end
-abstract type RectangleObstacle <: ObstacleTypes end
-abstract type SquareObstacle <: ObstacleTypes end
+abstract type ObstacleType end
+abstract type CircleObstacle <: ObstacleType end
+abstract type PolygonObstacle <: ObstacleType end
+abstract type RectangleObstacle <: ObstacleType end
+abstract type SquareObstacle <: ObstacleType end
 
-struct Obstacle{O <: ObstacleTypes}
+struct Obstacle{O <: ObstacleType}
     id::Int
     origin::Point
     radius::Float32
@@ -42,7 +42,7 @@ function PolygonObstacle(id::Int, vertices::NTuple{N, Point}) where {N}
     return Obstacle{PolygonObstacle}(id, origin, radius, vertices)
 end
 
-function RectangleObstacle(id::Int, origin::Point, a::Real, b::Real, angle::Real, obstacle_type::Type{<:ObstacleTypes}=RectangleObstacle)
+function RectangleObstacle(id::Int, origin::Point, a::Real, b::Real, angle::Real, obstacle_type::Type{<:ObstacleType}=RectangleObstacle)
     @argcheck a > 0 "RectangleObstacle a must be greater than zero: a=$(a)"
     @argcheck b > 0 "RectangleObstacle b must be greater than zero: b=$(b)"
     
@@ -75,11 +75,11 @@ SquareObstacle(id::Int, origin::Point, a::Real, angle::Real) = RectangleObstacle
 
 Base.show(io::IO, p::Point) = print(io, "($(p.x), $(p.y))")
 
-function Base.show(io::IO, o::Obstacle{O}) where {O <: ObstacleTypes}
+function Base.show(io::IO, o::Obstacle{O}) where {O <: ObstacleType}
     print(io, "$O #$(o.id), origin=$(o.origin), radius=$(o.radius)")
 end
 
-function Base.show(io::IO, ::MIME"text/plain", o::Obstacle{O}) where {O <: ObstacleTypes}
+function Base.show(io::IO, ::MIME"text/plain", o::Obstacle{O}) where {O <: ObstacleType}
     print(io, """
     Obstacle #$(o.id):
         - Type: $O
@@ -89,7 +89,7 @@ function Base.show(io::IO, ::MIME"text/plain", o::Obstacle{O}) where {O <: Obsta
     """)
 end
 
-function extrainfo(o::Obstacle{O}) where {O <: ObstacleTypes}
+function extrainfo(o::Obstacle{O}) where {O <: ObstacleType}
     io = IOBuffer()
     show(io, MIME"text/plain"(), o)
     return String(take!(io))
