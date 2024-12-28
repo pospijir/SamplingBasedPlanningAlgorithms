@@ -28,7 +28,6 @@ function CircleObstacle(id::Int, origin::Point, radius::Real)
 end
 
 function PolygonObstacle(id::Int, vertices::NTuple{N, Point}) where {N}
-
     @argcheck length(vertices) >= 3 "PolygonObstacle must have at least 3 vertices: vertices=$(vertices)"
     @argcheck length(Set(vertices)) == length(vertices) "PolygonObstacle vertices must be unique: vertices=$(vertices)"
     
