@@ -164,3 +164,33 @@ function Base.show(io::IO, ::MIME"text/plain", a::Agent{A}) where {A <: AgentTyp
         - Vertices: $(a.vertices)
     """)
 end
+
+
+##########  World  #############################################################
+
+struct World
+    name::String
+    start::Point
+    goal::Point
+    obstacles::NTuple{N, Obstacle} where {N}
+    xlim::Range
+    ylim::Range
+end
+
+function Base.show(io::IO, w::World)
+    print(io, "World: $(w.name), start=$(w.start), goal=$(w.goal), #obstacles=$(length(w.obstacles))")
+end
+
+function Base.show(io::IO, ::MIME"text/plain", w::World)
+    print(io, """
+    World: $(w.name)
+        - Start: $(w.start)
+        - Goal: $(w.goal)
+        - Xlim: $(w.xlim)
+        - Ylim: $(w.ylim)
+        - #Obstacles: $(length(w.obstacles))
+    """)
+    for o in w.obstacles
+        print(io, extrainfo(o))
+    end
+end
