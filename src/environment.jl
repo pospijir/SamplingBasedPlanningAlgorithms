@@ -123,14 +123,14 @@ function CircleAgent(id::Int, pose::Pose, radius::Real)
     Agent{CircleAgent}(id, pose, radius, ())
 end
 
-function PolygonAgent(id::Int, origin::Pose, vertices::NTuple{N, Point}) where {N}
+function PolygonAgent(id::Int, pose::Pose, vertices::NTuple{N, Point}) where {N}
     @argcheck length(vertices) >= 3 "PolygonAgent must have at least 3 vertices: vertices=$(vertices)"
     @argcheck length(Set(vertices)) == length(vertices) "PolygonAgent vertices must be unique: vertices=$(vertices)"
     
-    distances_squared = (getfield.(vertices, :x) .- origin.x).^2 .+ (getfield.(vertices, :y) .- origin.y).^2
+    distances_squared = (getfield.(vertices, :x) .- pose.x).^2 .+ (getfield.(vertices, :y) .- pose.y).^2
     radius = sqrt(maximum(distances_squared))
 
-    return Agent{PolygonAgent}(id, origin, radius, vertices)
+    return Agent{PolygonAgent}(id, pose, radius, vertices)
 end
 
 function PolygonAgent(id::Int, vertices::NTuple{N, Point}) where {N}
@@ -140,7 +140,7 @@ function PolygonAgent(id::Int, vertices::NTuple{N, Point}) where {N}
     n = length(vertices)
     mean_x = sum(v.x for v in vertices) / n
     mean_y = sum(v.y for v in vertices) / n
-    origin = Pose(mean_x, mean_y, 0)
+    pose = Pose(mean_x, mean_y, 0)
 
-    return PolygonAgent(id, origin, vertices)
+    return PolygonAgent(id, pose, vertices)
 end
