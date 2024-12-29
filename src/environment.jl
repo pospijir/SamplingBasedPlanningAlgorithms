@@ -12,6 +12,14 @@ struct Pose
     angle::Float32
 end
 
+Base.show(io::IO, p::Point) = print(io, "($(p.x), $(p.y))")
+Base.show(io::IO, p::Pose) = print(io, "($(p.x), $(p.y), α=$(p.angle))")
+
+function extrainfo(object)
+    io = IOBuffer()
+    show(io, MIME"text/plain"(), object)
+    return String(take!(io))
+end
 
 ##########  Obstacles  #############################################################
 
@@ -79,8 +87,6 @@ end
 
 SquareObstacle(id::Int, origin::Point, a::Real, angle::Real) = RectangleObstacle(id, origin, a, a, angle, SquareObstacle)
 
-Base.show(io::IO, p::Point) = print(io, "($(p.x), $(p.y))")
-
 function Base.show(io::IO, o::Obstacle{O}) where {O <: ObstacleType}
     print(io, "$O #$(o.id), origin=$(o.origin), radius=$(o.radius)")
 end
@@ -93,12 +99,6 @@ function Base.show(io::IO, ::MIME"text/plain", o::Obstacle{O}) where {O <: Obsta
         - Radius: $(o.radius)
         - Vertices: $(o.vertices)
     """)
-end
-
-function extrainfo(o::Obstacle{O}) where {O <: ObstacleType}
-    io = IOBuffer()
-    show(io, MIME"text/plain"(), o)
-    return String(take!(io))
 end
 
 
@@ -143,4 +143,18 @@ function PolygonAgent(id::Int, vertices::NTuple{N, Point}) where {N}
     pose = Pose(mean_x, mean_y, 0)
 
     return PolygonAgent(id, pose, vertices)
+end
+
+function Base.show(io::IO, a::Agent{A}) where {A <: AgentType}
+    print(io, "$A #$(a.id), pose=$(a.pose), radius=$(a.radius)")
+end
+
+function Base.show(io::IO, ::MIME"text/plain", a::Agent{A}) where {A <: AgentType}
+    print(io, """
+    Agent #$(a.id):
+        - Type: $A
+        - Pose: $(a.pose)
+        - Radius: $(a.radius)
+        - Vertices: $(a.vertices)
+    """)
 end
