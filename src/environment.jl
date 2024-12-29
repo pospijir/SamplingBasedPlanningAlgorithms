@@ -6,6 +6,12 @@ struct Point
     y::Float32
 end
 
+struct Pose
+    x::Float32
+    y::Float32
+    angle::Float32
+end
+
 
 ##########  Obstacles  #############################################################
 
