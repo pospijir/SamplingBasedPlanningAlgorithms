@@ -12,8 +12,14 @@ struct Pose
     angle::Float32
 end
 
+struct Range
+    min::Float32
+    max::Float32
+end
+
 Base.show(io::IO, p::Point) = print(io, "($(p.x), $(p.y))")
 Base.show(io::IO, p::Pose) = print(io, "($(p.x), $(p.y), α=$(p.angle))")
+Base.show(io::IO, r::Range) = print(io, "($(r.min), $(r.max))")
 
 function extrainfo(object)
     io = IOBuffer()
