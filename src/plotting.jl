@@ -1,3 +1,6 @@
+using CairoMakie: poly!
+using Makie.GeometryBasics: Circle, Point2f
+
 const AGENT_COLOR = :blue
 const AGENT_BORDER_COLOR = :black
 const AGENT_BORDER_WIDTH = 2
