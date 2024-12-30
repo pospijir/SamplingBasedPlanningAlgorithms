@@ -82,7 +82,7 @@ function RectangleObstacle(origin::Point, a::Real, b::Real, angle::Real=0, obsta
         v = unrotated_vertices[i]
         rotated_x = cos_angle * (v.x - origin.x) - sin_angle * (v.y - origin.y) + origin.x
         rotated_y = sin_angle * (v.x - origin.x) + cos_angle * (v.y - origin.y) + origin.y
-        Point(rotated_x, rotated_y)
+        return Point(rotated_x, rotated_y)
     end, length(unrotated_vertices))
 
     radius = sqrt(half_a ^ 2 + half_b ^ 2)
