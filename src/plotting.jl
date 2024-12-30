@@ -1,12 +1,8 @@
-using CairoMakie
-using Makie.GeometryBasics
+const AGENT_COLOR = :blue
+const AGENT_BORDER_COLOR = :black
+const AGENT_BORDER_WIDTH = 2
 
-
-AGENT_COLOR = :blue
-AGENT_BORDER_COLOR = :black
-AGENT_BORDER_WIDTH = 2
-
-OBSTACLE_COLOR = :black
+const OBSTACLE_COLOR = :black
 
 function plot!(a::Agent{CircleAgent})
     poly!(Circle(Point2f(a.pose.x, a.pose.y), a.radius), color=AGENT_COLOR, strokecolor=AGENT_BORDER_COLOR, strokewidth=AGENT_BORDER_WIDTH)
