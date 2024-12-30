@@ -1,11 +1,13 @@
 module SamplingBasedPlanningAlgorithms
 
+include("environment.jl")
 export Point, Pose, Range
 export Obstacle, CircleObstacle, PolygonObstacle, RectangleObstacle, SquareObstacle, ObstacleType
 export PointAgent, CircleAgent, PolygonAgent
 export World
+export extrainfo
 
-include("environment.jl")
 include("plotting.jl")
+export plot_agent!, plot_obstacle!, plot_world!
 
 end # module SamplingBasedPlanningAlgorithms
