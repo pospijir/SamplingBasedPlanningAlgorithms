@@ -163,6 +163,21 @@ function Base.show(io::IO, ::MIME"text/plain", a::Agent{A}) where {A <: AgentTyp
     """)
 end
 
+function transform_vertices(agent::Agent{A}, pose::Pose) where {A <: AgentType}
+    cos_angle = cos(pose.angle)
+    sin_angle = sin(pose.angle)
+    
+    return ntuple(i -> begin
+        v = agent.vertices[i]
+        rotated_x = cos_angle * (v.x - agent.origin.x) - sin_angle * (v.y - agent.origin.y) + agent.origin.x
+        rotated_y = sin_angle * (v.x - agent.origin.x) + cos_angle * (v.y - agent.origin.y) + agent.origin.y
+        x = rotated_x + (pose.x - agent.origin.x)
+        y = rotated_y + (pose.y - agent.origin.y)
+        return Point(x, y)
+    end, length(agent.vertices))
+end
+
+
 ##########  World  #############################################################
 
 struct World
