@@ -91,6 +91,7 @@ function plot_environment(a::Agent{A}, w::World, size::Int=640) where {A <: Agen
     fig = Figure(size=(size, size))
     plot_world!(w, fig)
     plot_agent!(a, w.start)
+    plot_agent!(a, w.goal, :green)
 
     return fig
 end
