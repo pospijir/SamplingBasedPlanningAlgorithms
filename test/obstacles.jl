@@ -1,22 +1,22 @@
 @testset "Obstacle Constructors ArgCheck" begin
-    @test CircleObstacle(1, Point(1, 2), 1) isa Any
-    @test_throws ArgumentError CircleObstacle(1, Point(1, 2), 0)
-    @test_throws ArgumentError CircleObstacle(1, Point(1, 2), -1f0)
-    @test_throws ArgumentError CircleObstacle(1, Point(1, 2), -2)
+    @test CircleObstacle(Point(1, 2), 1) isa Any
+    @test_throws ArgumentError CircleObstacle(Point(1, 2), 0)
+    @test_throws ArgumentError CircleObstacle(Point(1, 2), -1f0)
+    @test_throws ArgumentError CircleObstacle(Point(1, 2), -2)
 
-    @test PolygonObstacle(1, (Point(1, 2), Point(1, -2), Point(-1, 2), Point(3, 2))) isa Any
-    @test_throws ArgumentError PolygonObstacle(1, (Point(1, 2), Point(1, -2), Point(1, 2), Point(3, 2)))
-    @test_throws ArgumentError PolygonObstacle(1, (Point(1, -2), Point(-1, 2)))
+    @test PolygonObstacle((Point(1, 2), Point(1, -2), Point(-1, 2), Point(3, 2))) isa Any
+    @test_throws ArgumentError PolygonObstacle((Point(1, 2), Point(1, -2), Point(1, 2), Point(3, 2)))
+    @test_throws ArgumentError PolygonObstacle((Point(1, -2), Point(-1, 2)))
 
-    @test SquareObstacle(1, Point(1, 2), 2, 30) isa Any
-    @test_throws ArgumentError SquareObstacle(1, Point(1, 2), 0, 30)
-    @test_throws ArgumentError SquareObstacle(1, Point(1, 2), -1f0, 30)
-    @test_throws ArgumentError SquareObstacle(1, Point(1, 2), -2, 30)
+    @test SquareObstacle(Point(1, 2), 2, 30) isa Any
+    @test_throws ArgumentError SquareObstacle(Point(1, 2), 0, 30)
+    @test_throws ArgumentError SquareObstacle(Point(1, 2), -1f0, 30)
+    @test_throws ArgumentError SquareObstacle(Point(1, 2), -2, 30)
   
-    @test RectangleObstacle(1, Point(1, 2), 2, 1, 30) isa Any
-    @test_throws ArgumentError RectangleObstacle(1, Point(1, 2), 0, 1, 30)
-    @test_throws ArgumentError RectangleObstacle(1, Point(1, 2), 1, -1f0, 30)
-    @test_throws ArgumentError RectangleObstacle(1, Point(1, 2), -2, 2, 30)
+    @test RectangleObstacle(Point(1, 2), 2, 1, 30) isa Any
+    @test_throws ArgumentError RectangleObstacle(Point(1, 2), 0, 1, 30)
+    @test_throws ArgumentError RectangleObstacle(Point(1, 2), 1, -1f0, 30)
+    @test_throws ArgumentError RectangleObstacle(Point(1, 2), -2, 2, 30)
 end
 
 
@@ -43,9 +43,9 @@ end
     vertices1 = (Point(-1, -1), Point(1, -1), Point(1, 1), Point(-1, 1))
     a1 = 2
     angle1 = 0
-    obs1 = Obstacle{ObstacleType}(0, origin1, radius1, vertices1)
-    sq_obs1 = SquareObstacle(0, origin1, a1, angle1)
-    pol_obs1 = PolygonObstacle(0, vertices1)
+    obs1 = Obstacle{ObstacleType}(origin1, radius1, vertices1)
+    sq_obs1 = SquareObstacle(origin1, a1, angle1)
+    pol_obs1 = PolygonObstacle(vertices1)
     
     compare_obstacles(obs1, sq_obs1)
     compare_obstacles(obs1, pol_obs1)
@@ -56,8 +56,8 @@ end
     vertices2 = (Point(1, -1), Point(1, 1), Point(-1, 1), Point(-1, -1))
     a2 = 2
     angle2 = 90
-    obs2 = Obstacle{ObstacleType}(0, origin2, radius2, vertices2)
-    sq_obs2 = SquareObstacle(0, origin2, a2, angle2)
+    obs2 = Obstacle{ObstacleType}(origin2, radius2, vertices2)
+    sq_obs2 = SquareObstacle(origin2, a2, angle2)
     
     compare_obstacles(obs2, sq_obs2)
 
@@ -66,8 +66,8 @@ end
     vertices3 = (Point(0, -sqrt2), Point(sqrt2, 0), Point(0, sqrt2), Point(-sqrt2, 0))
     a3 = 2
     angle3 = 45
-    obs3 = Obstacle{ObstacleType}(0, origin3, radius3, vertices3)
-    sq_obs3 = SquareObstacle(0, origin3, a3, angle3)
+    obs3 = Obstacle{ObstacleType}(origin3, radius3, vertices3)
+    sq_obs3 = SquareObstacle(origin3, a3, angle3)
     
     compare_obstacles(obs3, sq_obs3)
 
@@ -76,8 +76,8 @@ end
     a4 = 10
     b4 = 5
     angle4 = 0
-    rec_obs4 = RectangleObstacle(0, origin4, a4, b4, angle4)
-    pol_obs4 = PolygonObstacle(0, vertices4)
+    rec_obs4 = RectangleObstacle(origin4, a4, b4, angle4)
+    pol_obs4 = PolygonObstacle(vertices4)
     
     compare_obstacles(rec_obs4, pol_obs4)
 end
