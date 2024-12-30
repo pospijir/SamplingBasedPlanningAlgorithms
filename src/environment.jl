@@ -168,8 +168,8 @@ end
 
 struct World
     name::String
-    start::Point
-    goal::Point
+    start::Pose
+    goal::Pose
     xlim::Range
     ylim::Range
     obstacles::NTuple{N, Obstacle} where {N}
