@@ -8,6 +8,6 @@ export World
 export extrainfo
 
 include("plotting.jl")
-export plot_agent!, plot_obstacle!, plot_world!
+export plot_agent!, plot_obstacle!, plot_world!, plot_environment
 
 end # module SamplingBasedPlanningAlgorithms

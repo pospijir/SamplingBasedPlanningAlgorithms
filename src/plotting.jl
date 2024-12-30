@@ -1,4 +1,4 @@
-using CairoMakie: poly!
+using CairoMakie: poly!, xlims!, ylims!, Figure, Axis, Label
 using Makie.GeometryBasics: Circle, Point2f
 
 const AGENT_COLOR = :blue
@@ -29,8 +29,23 @@ function plot_obstacle!(o::Obstacle{O}) where {O <: ObstacleType}
     poly!(points, color=OBSTACLE_COLOR)
 end
 
-function plot_world!(w::World)
+function plot_world!(w::World, fig::Figure)
+    ax = Axis(fig[1, 1], title=w.name)
+    ax.ylabel = "y"
+    ax.xlabel = "x"
+    xlims!(ax, w.xlim.min, w.xlim.max)
+    ylims!(ax, w.ylim.min, w.ylim.max)
+
     for o in w.obstacles
         plot_obstacle!(o)
     end
+
+end
+
+function plot_environment(a::Agent{A}, w::World, size::Int=640) where {A <: AgentType}
+    fig = Figure(size=(size, size))
+    plot_world!(w, fig)
+    plot_agent!(a)
+
+    return fig
 end
