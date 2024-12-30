@@ -5,5 +5,6 @@ export Obstacle, CircleObstacle, PolygonObstacle, RectangleObstacle, SquareObsta
 export PointAgent, CircleAgent, PolygonAgent
 
 include("environment.jl")
+include("plotting.jl")
 
 end # module SamplingBasedPlanningAlgorithms
