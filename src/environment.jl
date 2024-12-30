@@ -61,7 +61,7 @@ function PolygonObstacle(vertices::NTuple{N, Point}) where {N}
     return Obstacle{PolygonObstacle}(origin, radius, vertices)
 end
 
-function RectangleObstacle(origin::Point, a::Real, b::Real, angle::Real, obstacle_type::Type{<:ObstacleType}=RectangleObstacle)
+function RectangleObstacle(origin::Point, a::Real, b::Real, angle::Real=0, obstacle_type::Type{<:ObstacleType}=RectangleObstacle)
     @argcheck a > 0 "RectangleObstacle a must be greater than zero: a=$(a)"
     @argcheck b > 0 "RectangleObstacle b must be greater than zero: b=$(b)"
     
@@ -90,7 +90,7 @@ function RectangleObstacle(origin::Point, a::Real, b::Real, angle::Real, obstacl
     return Obstacle{obstacle_type}(origin, radius, rotated_vertices)
 end
 
-SquareObstacle(origin::Point, a::Real, angle::Real) = RectangleObstacle(origin, a, a, angle, SquareObstacle)
+SquareObstacle(origin::Point, a::Real, angle::Real=0) = RectangleObstacle(origin, a, a, angle, SquareObstacle)
 
 function Base.show(io::IO, o::Obstacle{O}) where {O <: ObstacleType}
     print(io, "$O: origin=$(o.origin), radius=$(o.radius)")
