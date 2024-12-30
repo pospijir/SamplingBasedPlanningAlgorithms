@@ -35,6 +35,34 @@ function plot_agent!(a::Agent{PolygonAgent})
         strokewidth=AGENT_BORDER_WIDTH
     )
 end
+
+function plot_agent!(a::Agent{CircleAgent}, pose::Pose)
+    poly!(Circle(
+        Point2f(a.origin.x + pose.x, a.origin.y + pose.y), a.radius),
+        color=AGENT_COLOR,
+        strokecolor=AGENT_BORDER_COLOR,
+        strokewidth=AGENT_BORDER_WIDTH
+    )
+end
+
+function plot_agent!(a::Agent{PointAgent}, pose::Pose)
+    poly!(Circle(
+        Point2f(a.origin.x + pose.x, a.origin.y + pose.y), AGENT_POINT_RADIUS),
+        color=AGENT_COLOR,
+        strokecolor=AGENT_BORDER_COLOR,
+        strokewidth=AGENT_BORDER_WIDTH
+    )
+end
+
+function plot_agent!(a::Agent{PolygonAgent}, pose::Pose)
+    vertices = transform_vertices(a, pose)
+    points = Point2f[[(vertex.x, vertex.y) for vertex in vertices]...]
+    poly!(
+        points,
+        color=AGENT_COLOR,
+        strokecolor=AGENT_BORDER_COLOR,
+        strokewidth=AGENT_BORDER_WIDTH
+    )
 end
 
 function plot_obstacle!(o::Obstacle{CircleObstacle})
@@ -62,7 +90,7 @@ end
 function plot_environment(a::Agent{A}, w::World, size::Int=640) where {A <: AgentType}
     fig = Figure(size=(size, size))
     plot_world!(w, fig)
-    plot_agent!(a)
+    plot_agent!(a, w.start)
 
     return fig
 end
