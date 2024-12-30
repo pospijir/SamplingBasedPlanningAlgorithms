@@ -28,7 +28,13 @@ end
 
 function plot_agent!(a::Agent{PolygonAgent})
     points = Point2f[[(vertex.x, vertex.y) for vertex in a.vertices]...]
-    poly!(points, color=AGENT_COLOR)
+    poly!(
+        points,
+        color=AGENT_COLOR,
+        strokecolor=AGENT_BORDER_COLOR,
+        strokewidth=AGENT_BORDER_WIDTH
+    )
+end
 end
 
 function plot_obstacle!(o::Obstacle{CircleObstacle})
