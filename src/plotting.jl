@@ -8,7 +8,7 @@ const AGENT_BORDER_WIDTH = 2
 const OBSTACLE_COLOR = :black
 
 function plot_agent!(a::Agent{CircleAgent})
-    poly!(Circle(Point2f(a.pose.x, a.pose.y), a.radius), color=AGENT_COLOR, strokecolor=AGENT_BORDER_COLOR, strokewidth=AGENT_BORDER_WIDTH)
+    poly!(Circle(Point2f(a.point.x, a.pose.y), a.radius), color=AGENT_COLOR, strokecolor=AGENT_BORDER_COLOR, strokewidth=AGENT_BORDER_WIDTH)
 end
 
 function plot_agent!(a::Agent{PointAgent}, radius=0.1)
@@ -21,7 +21,7 @@ function plot_agent!(a::Agent{PolygonAgent})
 end
 
 function plot_obstacle!(o::Obstacle{CircleObstacle})
-    poly!(Circle(Point2f(o.pose.x, o.pose.y), o.radius), color=OBSTACLE_COLOR)
+    poly!(Circle(Point2f(o.origin.x, o.origin.y), o.radius), color=OBSTACLE_COLOR)
 end
 
 function plot_obstacle!(o::Obstacle{O}) where {O <: ObstacleType}
