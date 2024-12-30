@@ -1,18 +1,29 @@
 using CairoMakie: poly!, xlims!, ylims!, Figure, Axis, Label
 using Makie.GeometryBasics: Circle, Point2f
 
+
 const AGENT_COLOR = :blue
 const AGENT_BORDER_COLOR = :black
 const AGENT_BORDER_WIDTH = 2
-
+const AGENT_POINT_RADIUS = 0.1
 const OBSTACLE_COLOR = :black
 
 function plot_agent!(a::Agent{CircleAgent})
-    poly!(Circle(Point2f(a.pose.x, a.pose.y), a.radius), color=AGENT_COLOR, strokecolor=AGENT_BORDER_COLOR, strokewidth=AGENT_BORDER_WIDTH)
+    poly!(Circle(
+        Point2f(a.origin.x, a.origin.y), a.radius),
+        color=AGENT_COLOR,
+        strokecolor=AGENT_BORDER_COLOR,
+        strokewidth=AGENT_BORDER_WIDTH
+    )
 end
 
-function plot_agent!(a::Agent{PointAgent}, radius=0.1)
-    poly!(Circle(Point2f(a.pose.x, a.pose.y), radius), color=AGENT_COLOR, strokecolor=AGENT_BORDER_COLOR, strokewidth=AGENT_BORDER_WIDTH)
+function plot_agent!(a::Agent{PointAgent})
+    poly!(Circle(
+        Point2f(a.origin.x, a.origin.y), AGENT_POINT_RADIUS),
+        color=AGENT_COLOR,
+        strokecolor=AGENT_BORDER_COLOR,
+        strokewidth=AGENT_BORDER_WIDTH
+    )
 end
 
 function plot_agent!(a::Agent{PolygonAgent})
