@@ -170,9 +170,9 @@ struct World
     name::String
     start::Point
     goal::Point
-    obstacles::NTuple{N, Obstacle} where {N}
     xlim::Range
     ylim::Range
+    obstacles::NTuple{N, Obstacle} where {N}
 end
 
 function Base.show(io::IO, w::World)
