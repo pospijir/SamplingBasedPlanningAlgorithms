@@ -115,26 +115,26 @@ abstract type CircleAgent <: AgentType end
 abstract type PolygonAgent <: AgentType end
 
 mutable struct Agent{A <: AgentType}
-    pose::Pose
+    origin::Point
     radius::Float32
     vertices::NTuple{N, Point} where {N}
 end
 
-PointAgent(pose::Pose) = Agent{PointAgent}(pose, 0, ())
+PointAgent(origin::Point) = Agent{PointAgent}(origin, 0, ())
 
-function CircleAgent(pose::Pose, radius::Real)
+function CircleAgent(origin::Point, radius::Real)
     @argcheck radius > 0 "CircleAgent radius must be greater than zero: radius=$(radius)"
-    Agent{CircleAgent}(pose, radius, ())
+    Agent{CircleAgent}(origin, radius, ())
 end
 
-function PolygonAgent(pose::Pose, vertices::NTuple{N, Point}) where {N}
+function PolygonAgent(origin::Point, vertices::NTuple{N, Point}) where {N}
     @argcheck length(vertices) >= 3 "PolygonAgent must have at least 3 vertices: vertices=$(vertices)"
     @argcheck length(Set(vertices)) == length(vertices) "PolygonAgent vertices must be unique: vertices=$(vertices)"
     
-    distances_squared = (getfield.(vertices, :x) .- pose.x).^2 .+ (getfield.(vertices, :y) .- pose.y).^2
+    distances_squared = (getfield.(vertices, :x) .- origin.x).^2 .+ (getfield.(vertices, :y) .- origin.y).^2
     radius = sqrt(maximum(distances_squared))
 
-    return Agent{PolygonAgent}(pose, radius, vertices)
+    return Agent{PolygonAgent}(origin, radius, vertices)
 end
 
 function PolygonAgent(vertices::NTuple{N, Point}) where {N}
@@ -144,25 +144,24 @@ function PolygonAgent(vertices::NTuple{N, Point}) where {N}
     n = length(vertices)
     mean_x = sum(v.x for v in vertices) / n
     mean_y = sum(v.y for v in vertices) / n
-    pose = Pose(mean_x, mean_y, 0)
+    origin = Point(mean_x, mean_y)
 
-    return PolygonAgent(pose, vertices)
+    return PolygonAgent(origin,  vertices)
 end
 
 function Base.show(io::IO, a::Agent{A}) where {A <: AgentType}
-    print(io, "$A: pose=$(a.pose), radius=$(a.radius)")
+    print(io, "$A: origin=$(a.origin), radius=$(a.radius)")
 end
 
 function Base.show(io::IO, ::MIME"text/plain", a::Agent{A}) where {A <: AgentType}
     print(io, """
     Agent:
         - Type: $A
-        - Pose: $(a.pose)
+        - Origin: $(a.origin)
         - Radius: $(a.radius)
         - Vertices: $(a.vertices)
     """)
 end
-
 
 ##########  World  #############################################################
 
