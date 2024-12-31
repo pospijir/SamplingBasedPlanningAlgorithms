@@ -163,7 +163,7 @@ function Base.show(io::IO, ::MIME"text/plain", a::Agent{A}) where {A <: AgentTyp
     """)
 end
 
-function transform_vertices(agent::Agent{A}, pose::Pose) where {A <: AgentType}
+function transform_vertices(agent::Agent{<:AgentType}, pose::Pose)
     cos_angle = cos(pose.angle)
     sin_angle = sin(pose.angle)
     

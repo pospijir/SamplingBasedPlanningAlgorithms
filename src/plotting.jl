@@ -69,7 +69,7 @@ function plot_obstacle!(o::Obstacle{CircleObstacle})
     poly!(Circle(Point2f(o.origin.x, o.origin.y), o.radius), color=OBSTACLE_COLOR)
 end
 
-function plot_obstacle!(o::Obstacle{O}) where {O <: ObstacleType}
+function plot_obstacle!(o::Obstacle{<:ObstacleType})
     points = Point2f[[(vertex.x, vertex.y) for vertex in o.vertices]...]
     poly!(points, color=OBSTACLE_COLOR)
 end
@@ -87,7 +87,7 @@ function plot_world!(w::World, fig::Figure)
 
 end
 
-function plot_environment(a::Agent{A}, w::World, size::Int=640) where {A <: AgentType}
+function plot_environment(a::Agent{<:AgentType}, w::World, size::Int=640)
     fig = Figure(size=(size, size))
     plot_world!(w, fig)
     plot_agent!(a, w.start)
