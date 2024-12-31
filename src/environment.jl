@@ -177,6 +177,13 @@ function transform_vertices(agent::Agent{<:AgentType}, pose::Pose)
     end, length(agent.vertices))
 end
 
+function distance_squared(point::Union{Point, Pose}, obstacle::Obstacle{<:ObstacleType})
+    return (point.x - obstacle.origin.x) ^ 2 + (point.y - obstacle.origin.y) ^ 2
+end
+
+function is_collision_free(agent::Agent{PointAgent}, pose::Pose, obstacle::Obstacle{CircleObstacle})
+   return distance_squared(pose, obstacle) > obstacle.radius ^ 2  
+end
 
 ##########  World  #############################################################
 
