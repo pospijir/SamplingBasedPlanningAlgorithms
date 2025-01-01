@@ -238,6 +238,27 @@ function is_collision_free(agent::Agent{CircleAgent}, pose::Pose, obstacle::Obst
     return true
 end
 
+function is_collision_free(agent::Agent{PolygonAgent}, pose::Pose, obstacle::Obstacle{CircleObstacle})
+    vertices = transform_vertices(agent, pose)
+
+    is_inside(obstacle.origin, vertices) && return false
+    
+    radius_squared = obstacle.radius ^ 2
+    for vertex in vertices
+        (distance_squared(obstacle.origin, vertex) <= radius_squared) && return false
+    end
+    
+    n = length(vertices)
+    index_a = n
+    for index_b in 1:n
+        (distance_squared(obstacle.origin, vertices[index_a], vertices[index_b]) <= radius_squared) && return false
+        index_a = index_b
+    end
+
+    return true
+end
+
+
 
 ##########  World  #############################################################
 
