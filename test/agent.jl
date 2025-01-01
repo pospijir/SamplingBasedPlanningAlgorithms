@@ -17,10 +17,10 @@ end
     @test isapprox(distance_squared(Point(-1, -1), CircleObstacle(Point(-5, -4), 1)), 25)
     @test isapprox(distance_squared(Point(-1, -1), CircleObstacle(Point(1, 2), 1)), 13)
 
-    @test isapprox(distance_squared(Point(2, 0), Point(1, 0), CircleObstacle(Point(-1, -1), 1)), 5)
-    @test isapprox(distance_squared(Point(1, 0), Point(2, 0), CircleObstacle(Point(-1, -1), 1)), 5)
-    @test isapprox(distance_squared(Point(-1, 1), Point(2, 1), CircleObstacle(Point(0, 0), 1)), 1)
-    @test isapprox(distance_squared(Point(2, -1), Point(2, 1), CircleObstacle(Point(0, 0), 1)), 4)
+    @test isapprox(distance_squared(Point(-1, -1), Point(2, 0), Point(1, 0)), 5)
+    @test isapprox(distance_squared(Point(-1, -1), Point(1, 0), Point(2, 0)), 5)
+    @test isapprox(distance_squared(Point(0, 0), Point(-1, 1), Point(2, 1)), 1)
+    @test isapprox(distance_squared(Point(0, 0), Point(2, -1), Point(2, 1)), 4)
 end
 
 @testset "Point Inside Polygon" begin
