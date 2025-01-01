@@ -216,6 +216,10 @@ function is_inside(point::Union{Point, Pose}, vertices::NTuple{N, Point}) where 
     return inside
 end
 
+function is_collision_free(agent::Agent{PointAgent}, pose::Pose, obstacle::Obstacle{<:PolygonObstacle})
+    return !is_inside(pose, obstacle.vertices) 
+end
+
 ##########  World  #############################################################
 
 struct World
