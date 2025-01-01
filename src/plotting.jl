@@ -6,12 +6,13 @@ const AGENT_COLOR = :blue
 const AGENT_BORDER_COLOR = :black
 const AGENT_BORDER_WIDTH = 2
 const AGENT_POINT_RADIUS = 0.1
+const AGENT_TRANSPARENCY = 0.7
 const OBSTACLE_COLOR = :black
 
 function plot_agent!(a::Agent{CircleAgent}, color::Symbol=AGENT_COLOR)
     poly!(Circle(
         Point2f(a.origin.x, a.origin.y), a.radius),
-        color=color,
+        color=(color, AGENT_TRANSPARENCY),
         strokecolor=AGENT_BORDER_COLOR,
         strokewidth=AGENT_BORDER_WIDTH
     )
@@ -20,7 +21,7 @@ end
 function plot_agent!(a::Agent{PointAgent}, color::Symbol=AGENT_COLOR)
     poly!(Circle(
         Point2f(a.origin.x, a.origin.y), AGENT_POINT_RADIUS),
-        color=color,
+        color=(color, AGENT_TRANSPARENCY),
         strokecolor=AGENT_BORDER_COLOR,
         strokewidth=AGENT_BORDER_WIDTH
     )
@@ -30,7 +31,7 @@ function plot_agent!(a::Agent{PolygonAgent}, color::Symbol=AGENT_COLOR)
     points = Point2f[[(vertex.x, vertex.y) for vertex in a.vertices]...]
     poly!(
         points,
-        color=color,
+        color=(color, AGENT_TRANSPARENCY),
         strokecolor=AGENT_BORDER_COLOR,
         strokewidth=AGENT_BORDER_WIDTH
     )
@@ -39,7 +40,7 @@ end
 function plot_agent!(a::Agent{CircleAgent}, pose::Pose, color::Symbol=AGENT_COLOR)
     poly!(Circle(
         Point2f(a.origin.x + pose.x, a.origin.y + pose.y), a.radius),
-        color=color,
+        color=(color, AGENT_TRANSPARENCY),
         strokecolor=AGENT_BORDER_COLOR,
         strokewidth=AGENT_BORDER_WIDTH
     )
@@ -48,7 +49,7 @@ end
 function plot_agent!(a::Agent{PointAgent}, pose::Pose, color::Symbol=AGENT_COLOR)
     poly!(Circle(
         Point2f(a.origin.x + pose.x, a.origin.y + pose.y), AGENT_POINT_RADIUS),
-        color=color,
+        color=(color, AGENT_TRANSPARENCY),
         strokecolor=AGENT_BORDER_COLOR,
         strokewidth=AGENT_BORDER_WIDTH
     )
@@ -59,7 +60,7 @@ function plot_agent!(a::Agent{PolygonAgent}, pose::Pose, color::Symbol=AGENT_COL
     points = Point2f[[(vertex.x, vertex.y) for vertex in vertices]...]
     poly!(
         points,
-        color=color,
+        color=(color, AGENT_TRANSPARENCY),
         strokecolor=AGENT_BORDER_COLOR,
         strokewidth=AGENT_BORDER_WIDTH
     )
