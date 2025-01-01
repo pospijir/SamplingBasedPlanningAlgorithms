@@ -201,7 +201,20 @@ end
 function is_collision_free(agent::Agent{CircleAgent}, pose::Pose, obstacle::Obstacle{CircleObstacle})
     return distance_squared(pose, obstacle) > (agent.radius + obstacle.radius) ^ 2  
 end
- 
+
+function is_inside(point::Union{Point, Pose}, vertices::NTuple{N, Point}) where {N}
+    inside = false
+    n = length(vertices)
+    index_a = n
+    for index_b in 1:n
+        if (vertices[index_a].y > point.y) != (vertices[index_b].y > point.y) && 
+           (point.x < (vertices[index_b].x - vertices[index_a].x) * (point.y - vertices[index_a].y) / (vertices[index_b].y - vertices[index_a].y) + vertices[index_a].x)
+            inside = !inside
+        end
+        index_a = index_b
+    end
+    return inside
+end
 
 ##########  World  #############################################################
 

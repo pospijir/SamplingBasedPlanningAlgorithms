@@ -22,6 +22,20 @@ end
     @test isapprox(distance_squared(Point(-1, 1), Point(2, 1), CircleObstacle(Point(0, 0), 1)), 1)
     @test isapprox(distance_squared(Point(2, -1), Point(2, 1), CircleObstacle(Point(0, 0), 1)), 4)
 end
+
+@testset "Point Inside Polygon" begin
+    square = SquareObstacle(Point(0, 0), 2)
+    @test is_inside(Point(0, 0), square.vertices) == true
+    @test is_inside(Point(2, 2), square.vertices) == false
+    for i in 1:length(square.vertices)
+        @test is_inside(square.vertices[1], square.vertices) == true
+    end
+
+    for _ in 1:25
+        x = rand() * 4 - 2
+        y = rand() * 4 - 2
+        @test is_inside(Point(x, y), square.vertices) == (abs(x) <= 1 && abs(y) <= 1)
+    end
 end
 
 @testset "Collisions" begin
