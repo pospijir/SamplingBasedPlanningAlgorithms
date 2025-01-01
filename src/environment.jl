@@ -1,5 +1,6 @@
 using ArgCheck
 
+const ROUNDING_DIGITS = 3
 
 struct Point
     x::Float32
@@ -177,8 +178,20 @@ function transform_vertices(agent::Agent{<:AgentType}, pose::Pose)
     end, length(agent.vertices))
 end
 
-function distance_squared(point::Union{Point, Pose}, obstacle::Obstacle{<:ObstacleType})
-    return (point.x - obstacle.origin.x) ^ 2 + (point.y - obstacle.origin.y) ^ 2
+function distance_squared(point_a::Union{Point, Pose}, point_b::Union{Point, Pose})
+    return round((point_a.x - point_b.x) ^ 2 + (point_a.y - point_b.y) ^ 2, digits=ROUNDING_DIGITS)
+end
+
+distance_squared(point::Union{Point, Pose}, obstacle::Obstacle{<:ObstacleType}) = distance_squared(point, obstacle.origin)
+
+function distance_squared(point_a::Point, point_b::Point, obstacle::Obstacle{<:ObstacleType})
+    edge_length_squared = distance_squared(point_a, point_b)
+
+    t = (obstacle.origin.x - point_a.x) * (point_b.x - point_a.x) 
+    t += (obstacle.origin.y - point_a.y) * (point_b.y - point_a.y)
+    t = clamp(t / edge_length_squared, 0.0, 1.0)
+    point_closest = Point(point_a.x + t * (point_b.x - point_a.x), point_a.y + t * (point_b.y - point_a.y))
+    return distance_squared(obstacle.origin, point_closest)
 end
 
 function is_collision_free(agent::Agent{PointAgent}, pose::Pose, obstacle::Obstacle{CircleObstacle})
