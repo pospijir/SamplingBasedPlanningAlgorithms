@@ -33,8 +33,8 @@ end
 abstract type ObstacleType end
 abstract type CircleObstacle <: ObstacleType end
 abstract type PolygonObstacle <: ObstacleType end
-abstract type RectangleObstacle <: ObstacleType end
-abstract type SquareObstacle <: ObstacleType end
+abstract type RectangleObstacle <: PolygonObstacle end
+abstract type SquareObstacle <: PolygonObstacle end
 
 struct Obstacle{O <: ObstacleType}
     origin::Point
