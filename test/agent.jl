@@ -301,5 +301,84 @@ end
             fig = plot_environment(agent, world)
             save(joinpath("plots", "$testset_agent_name-$testset_obstacle_name-4.png"), fig)
         end
+
+        testset_obstacle_name = "PolygonObstacle"
+        @testset "$testset_obstacle_name" begin
+            agent = CircleAgent(Point(0, 0), 0.5)
+            pose = Pose(-1, 1, 0)
+            obstacle = SquareObstacle(Point(2, 0), 1, 30)
+            world = World(
+                "Test Collisions",
+                pose,
+                Pose(100, 0, 0),
+                Range(-2, 4),
+                Range(-2, 2),
+                (obstacle,)
+            )
+            @test is_collision_free(agent, pose, obstacle) == true
+            fig = plot_environment(agent, world)
+            save(joinpath("plots", "$testset_agent_name-$testset_obstacle_name-1.png"), fig)
+
+            agent = CircleAgent(Point(0, 0), 0.5)
+            pose = Pose(0, 0, 0)
+            obstacle = SquareObstacle(Point(0, 0), 1.5, -30)
+            world = World(
+                "Test Collisions",
+                pose,
+                Pose(100, 0, 0),
+                Range(-2, 2),
+                Range(-2, 2),
+                (obstacle,)
+            )
+            @test is_collision_free(agent, pose, obstacle) == false
+            fig = plot_environment(agent, world)
+            save(joinpath("plots", "$testset_agent_name-$testset_obstacle_name-2.png"), fig)
+
+            agent = CircleAgent(Point(0, 0), 0.5)
+            pose = Pose(1, 1, 0)
+            obstacle = SquareObstacle(Point(0, 0), 1.5, -30)
+            world = World(
+                "Test Collisions",
+                pose,
+                Pose(100, 0, 0),
+                Range(-2, 2),
+                Range(-2, 2),
+                (obstacle,)
+            )
+            @test is_collision_free(agent, pose, obstacle) == true
+            fig = plot_environment(agent, world)
+            save(joinpath("plots", "$testset_agent_name-$testset_obstacle_name-3.png"), fig)
+
+            agent = CircleAgent(Point(0, 0), 0.5)
+            pose = Pose(1, 0, 0)
+            obstacle = SquareObstacle(Point(0, 0), 1.5, -30)
+            world = World(
+                "Test Collisions",
+                pose,
+                Pose(100, 0, 0),
+                Range(-2, 2),
+                Range(-2, 2),
+                (obstacle,)
+            )
+            @test is_collision_free(agent, pose, obstacle) == false
+            fig = plot_environment(agent, world)
+            save(joinpath("plots", "$testset_agent_name-$testset_obstacle_name-4.png"), fig)
+
+            agent = CircleAgent(Point(0, 0), 1.5)
+            pose = Pose(0, 0, 0)
+            obstacle = SquareObstacle(Point(0, 0), 1.5, 45)
+            world = World(
+                "Test Collisions",
+                pose,
+                Pose(100, 0, 0),
+                Range(-2, 2),
+                Range(-2, 2),
+                (obstacle,)
+            )
+            @test is_collision_free(agent, pose, obstacle) == false
+            fig = plot_environment(agent, world)
+            save(joinpath("plots", "$testset_agent_name-$testset_obstacle_name-5.png"), fig)
+
+        end
     end
 end

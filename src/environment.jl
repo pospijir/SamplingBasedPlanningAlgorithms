@@ -220,6 +220,25 @@ function is_collision_free(agent::Agent{PointAgent}, pose::Pose, obstacle::Obsta
     return !is_inside(pose, obstacle.vertices) 
 end
 
+function is_collision_free(agent::Agent{CircleAgent}, pose::Pose, obstacle::Obstacle{<:PolygonObstacle})
+    is_inside(pose, obstacle.vertices) && return false
+    
+    radius_squared = agent.radius ^ 2
+    for vertex in obstacle.vertices
+        (distance_squared(pose, vertex) <= radius_squared) && return false
+    end
+    
+    n = length(obstacle.vertices)
+    index_a = n
+    for index_b in 1:n
+        (distance_squared(pose, obstacle.vertices[index_a], obstacle.vertices[index_b]) <= radius_squared) && return false
+        index_a = index_b
+    end
+
+    return true
+end
+
+
 ##########  World  #############################################################
 
 struct World
