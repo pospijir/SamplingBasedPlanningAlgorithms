@@ -185,6 +185,11 @@ function is_collision_free(agent::Agent{PointAgent}, pose::Pose, obstacle::Obsta
    return distance_squared(pose, obstacle) > obstacle.radius ^ 2  
 end
 
+function is_collision_free(agent::Agent{CircleAgent}, pose::Pose, obstacle::Obstacle{CircleObstacle})
+    return distance_squared(pose, obstacle) > (agent.radius + obstacle.radius) ^ 2  
+end
+ 
+
 ##########  World  #############################################################
 
 struct World
