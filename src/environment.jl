@@ -194,14 +194,6 @@ function distance_squared(point::Union{Point, Pose}, point_a::Point, point_b::Po
     return distance_squared(point, point_closest)
 end
 
-function is_collision_free(agent::Agent{PointAgent}, pose::Pose, obstacle::Obstacle{CircleObstacle})
-   return distance_squared(pose, obstacle) > obstacle.radius ^ 2  
-end
-
-function is_collision_free(agent::Agent{CircleAgent}, pose::Pose, obstacle::Obstacle{CircleObstacle})
-    return distance_squared(pose, obstacle) > (agent.radius + obstacle.radius) ^ 2  
-end
-
 function is_inside(point::Union{Point, Pose}, vertices::NTuple{N, Point}) where {N}
     inside = false
     n = length(vertices)
@@ -216,8 +208,16 @@ function is_inside(point::Union{Point, Pose}, vertices::NTuple{N, Point}) where 
     return inside
 end
 
+function is_collision_free(agent::Agent{PointAgent}, pose::Pose, obstacle::Obstacle{CircleObstacle})
+   return distance_squared(pose, obstacle) > obstacle.radius ^ 2  
+end
+
 function is_collision_free(agent::Agent{PointAgent}, pose::Pose, obstacle::Obstacle{<:PolygonObstacle})
     return !is_inside(pose, obstacle.vertices) 
+end
+
+function is_collision_free(agent::Agent{CircleAgent}, pose::Pose, obstacle::Obstacle{CircleObstacle})
+    return distance_squared(pose, obstacle) > (agent.radius + obstacle.radius) ^ 2  
 end
 
 function is_collision_free(agent::Agent{CircleAgent}, pose::Pose, obstacle::Obstacle{<:PolygonObstacle})
