@@ -39,7 +39,7 @@ end
 
 function plot_agent!(a::Agent{CircleAgent}, pose::Pose, color::Symbol=AGENT_COLOR)
     poly!(Circle(
-        Point2f(a.origin.x + pose.x, a.origin.y + pose.y), a.radius),
+        Point2f(pose.x, pose.y), a.radius),
         color=(color, AGENT_TRANSPARENCY),
         strokecolor=AGENT_BORDER_COLOR,
         strokewidth=AGENT_BORDER_WIDTH
@@ -48,7 +48,7 @@ end
 
 function plot_agent!(a::Agent{PointAgent}, pose::Pose, color::Symbol=AGENT_COLOR)
     poly!(Circle(
-        Point2f(a.origin.x + pose.x, a.origin.y + pose.y), AGENT_POINT_RADIUS),
+        Point2f(pose.x, pose.y), AGENT_POINT_RADIUS),
         color=(color, AGENT_TRANSPARENCY),
         strokecolor=AGENT_BORDER_COLOR,
         strokewidth=AGENT_BORDER_WIDTH
