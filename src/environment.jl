@@ -258,7 +258,47 @@ function is_collision_free(agent::Agent{PolygonAgent}, pose::Pose, obstacle::Obs
     return true
 end
 
+function intersect_in_segment(A::Point, B::Point, C::Point, D::Point)
+    
+    top = (D.y - C.y) * (A.x - C.x) - (D.x - C.x) * (A.y - C.y)
+    bottom = (D.x - C.x) * (B.y - A.y) - (D.y - C.y) * (B.x - A.x)
+    
+    (bottom == 0.0) && return false
+    offset = top / bottom
+    return (offset >= 0 && offset <= 1)
+end
 
+function is_collision_free(agent::Agent{PolygonAgent}, pose::Pose, obstacle::Obstacle{<:PolygonObstacle})
+
+    agent_vertices = transform_vertices(agent, pose)
+
+    for vertex in agent_vertices
+        is_inside(vertex, obstacle.vertices) && return false
+    end
+
+    for vertex in obstacle.vertices
+        is_inside(vertex, agent_vertices) && return false
+    end
+
+    index_a_end = length(agent_vertices)
+    for index_a_start in 1:length(agent_vertices)
+        
+        index_o_end = length(obstacle.vertices)
+        for index_o_start in 1:length(obstacle.vertices)
+            A = agent_vertices[index_a_start]
+            B = agent_vertices[index_a_end]
+            C = obstacle.vertices[index_o_start]
+            D = obstacle.vertices[index_o_end]
+            
+            intersect_in_segment(A, B, C, D) && intersect_in_segment(C, D, A, B) && return false
+            
+            index_o_end = index_o_start
+        end
+        index_a_end = index_a_start
+    end
+
+    return true
+end
 
 ##########  World  #############################################################
 
