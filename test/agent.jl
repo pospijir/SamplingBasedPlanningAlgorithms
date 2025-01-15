@@ -1,3 +1,6 @@
+using SamplingBasedPlanningAlgorithms: is_inside, distance_squared
+
+
 @testset "Agent Constructors ArgCheck" begin
     @test CircleAgent(Point(1, 2), 1) isa Any
     @test_throws ArgumentError CircleAgent(Point(1, 2), 0)
